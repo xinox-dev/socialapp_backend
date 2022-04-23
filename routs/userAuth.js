@@ -12,7 +12,7 @@ class userAuth {
     async login(req, res) {
         const login = req.body.login;
         const password = req.body.password;
-
+        console.log('Nowe logowanie...')
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
           return res.status(400).json({
@@ -25,7 +25,13 @@ class userAuth {
             .query(SQL, (err, result) => {
                 if(err)throw(err)
                 if(result == 0) {
-                return res.status(400).json({msg:"Email or password is incorrect"});
+                return res.status(401).json({
+                  success: false,
+                  errors:[{
+                      param:"",
+                      msg:"Email or password is incorrect"    
+                  }]
+                })
               } else {
                 const email = result[0].email;
                 const id_user = result[0].id_user;
@@ -33,9 +39,15 @@ class userAuth {
                     .compare(password, result[0].pass)
                     .then(async(valid) => {
                       if(!valid) {
-                        return res.status(401).json({msg:"Email or password is incorrect"});
+                        return res.status(401).json({
+                          success: false,
+                          errors:[{
+                              param:"",
+                              msg:"Email or password is incorrect"    
+                          }]
+                        })
                       }
-                      const token = jwt.sign({id_user}, secret_key,{expiresIn:60})
+                      const token = jwt.sign({id_user}, secret_key,{expiresIn:60000000})
                       await refToken.delete(id_user)
                       const ref_token = jwt.sign({id_user}, refresh_secret_key,{expiresIn:600000})
                       await refToken.save(ref_token,id_user)
@@ -45,12 +57,20 @@ class userAuth {
                   
                       res .status(200)
                           .json({
+                            success:true,
                             msg:"Zalogowano pomyślnie",
                             user:{id_user,login, email},
+                            tokens:{token, ref_token}
                           })
                     })
                     .catch((err) => {
-                      res.status(500).json({msg:"Email or password is incorrect"});
+                      res.status(500).json({
+                        success: false,
+                        errors:[{
+                            param:"",
+                            msg:"Serwer Error"    
+                        }]
+                      });
                       console.log(err)
                     })
               }

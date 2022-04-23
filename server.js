@@ -1,14 +1,23 @@
 const express = require('express');
 const {port} = require('./config/config');
-const routes = require('./api/user/userAPI')
-var cookieParser = require('cookie-parser')
-
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
 const app = express();
-
+app.use(cors())
 app.use(cookieParser())
 app.use(express.json());
-app.use ("/api", routes);
+
+const userAPI = require('./api/user/userAPI')
+const profileAPI = require('./api/user/profileAPI')
+const postAPI = require('./api/user/postAPI')
+const likePostAPI = require('./api/user/likePostAPI')
+app.use ("/api", userAPI);
+app.use ("/api", profileAPI);
+app.use ("/api", postAPI);
+app.use ("/api", likePostAPI);
+
+
 
 
 require('./test/test')

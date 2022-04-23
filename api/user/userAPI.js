@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const userValidator= require('../../controllers/userValidator')
-const emailValidator= require('../../controllers/emailValidator')
-const tokenAuth = require('./../../controllers/tokenAuth')
-const {verifyEmail} = require('../../controllers/userVerify')
-const {verifyLogin} = require('../../controllers/userVerify')
+const userValidator= require('../../controllers/auth/userValidator')
+const emailValidator= require('../../controllers/auth/emailValidator')
+const tokenAuth = require('../../controllers/auth/tokenAuth')
+const {verifyEmail} = require('../../controllers/auth/userVerify')
+const {verifyLogin} = require('../../controllers/auth/userVerify')
 
 
 const userAuth = require('../../routs/userAuth');

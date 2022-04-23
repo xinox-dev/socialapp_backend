@@ -1,5 +1,5 @@
 module.exports = {
-port: process.env.PORT || 3000,
+port: process.env.PORT || 3001,
 secret_key: "a8bi4fc6h3j7kuamw3f4gw4j6uyaw53iw46735g4fu7ka56g387if45q93254quk237456g1239q785f4gi71256g497",
 refresh_secret_key: "59PG4F3Y5HUW73I48GTFU7WKI346OF58743G56TI8G643FQTH5FKYUJBOIDES465TFG7WI43345896FG3WF546783QV8",
 }

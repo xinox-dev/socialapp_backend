@@ -1,6 +1,4 @@
-const express = require("express")
-const pool = require("../config/db_conect")
-const { body } = require("express-validator");
+const pool = require("../../config/db_conect")
 const bcrypt = require("bcrypt");
 
 class userVerify  {
@@ -9,9 +7,13 @@ class userVerify  {
         pool.query(SQL, (err, resopnse)=>{
             if(resopnse.length === 0) next()
             else {
-                res.status(200).json({
+                res.status(403).json({
                     success: false,
-                    msg:"Email już jest zajęty"
+                    errors:[{
+                        param:"email",
+                        msg:"Email już jest zajęty"     
+                    }]
+                    
                 })
             }
         })
@@ -21,9 +23,13 @@ class userVerify  {
         pool.query(SQL, (err, resopnse)=>{
             if(resopnse.length === 0) next()
             else {
-                res.status(200).json({
+                res.status(403).json({
                     success: false,
-                    msg:"Login już jest zajęty"
+                    errors:[{
+                        param:"login",
+                        msg:"Login już jest zajęty"    
+                    }]
+                    
                 })
             }
         })
@@ -38,7 +44,7 @@ class userVerify  {
             }
             const result = bcrypt.compareSync(req.body.password, resopnse[0].passwd);
             if(result) next()
-            else res.status(400).send("Email bądz hasło nieprawidłowe")
+            else res.status(403).send("Email bądz hasło nieprawidłowe")
         })
     };
 
