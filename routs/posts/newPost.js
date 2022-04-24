@@ -24,7 +24,6 @@ const newPost = (req, res) => {
 
         pool.query(SQL, (err, response) => {
             if(err) {
-                console.log(err)
                 res.status(501)
             }
             else(

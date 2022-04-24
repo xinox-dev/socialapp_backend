@@ -1,7 +1,7 @@
 const pool = require("../../config/db_conect");
 
 
-const getLikePost = (req, res) => {
+const getLikePost = (req, res, next) => {
     try {
         const idPost = req.params['id']
 
@@ -9,10 +9,8 @@ const getLikePost = (req, res) => {
         pool.query(SQL, (err, response) => {
             if(err) res.sendStatus(500)
             else {
-                res.status(200).json({
-                    id_post: idPost,
-                    like: response.length
-                })
+                req.PostLike = response.length
+                next()
             }
         })
     } catch {

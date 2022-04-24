@@ -3,7 +3,7 @@ const pool = require('../../config/db_conect');
 
 const getProfile = (req, res) => {
     const id = req.params['id']
-    let SQL = `SELECT * FROM profile WHERE id_user="${id}"`
+    let SQL = `SELECT * FROM profile WHERE id_profile="${id}"`
     
     pool.query(SQL, (err, response) => { 
         if(err) console.log(err)

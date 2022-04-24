@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
-
+//middleways
 const userValidator= require('../../controllers/auth/userValidator')
 const emailValidator= require('../../controllers/auth/emailValidator')
 const tokenAuth = require('../../controllers/auth/tokenAuth')
+const userToken = require('../../routs/userToken');
 const {verifyEmail} = require('../../controllers/auth/userVerify')
 const {verifyLogin} = require('../../controllers/auth/userVerify')
-
-
+//API
 const userAuth = require('../../routs/userAuth');
-const userToken = require('../../routs/userToken');
-
 
 //login 
 router.post('/login',userValidator, userAuth.login);
